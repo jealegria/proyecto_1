@@ -15,6 +15,7 @@ editor: visual
 execute:
   warning: false
   message: false
+  echo: false
 footnotes-hover: true # muestra notas al pie
 smooth-scroll: true # suaviza el scroll
 code-copy: true            # Permite copiar el código desde el documento
@@ -27,5 +28,23 @@ library(readxl)
 library(dplyr)
 library(lubridate)
 library(ggplot2)
+library(gt)
 
+```
+
+```{r}
+source("carga_basesraw.R")
+source("procesamiento.R")
+```
+
+# Tabla 1
+
+```{r}
+tabla_gt
+```
+
+# Grafico 1
+
+```{r}
+grafico1
 ```

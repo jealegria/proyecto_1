@@ -1,3 +1,14 @@
+#Cargar libreria
+library(tidyr)
+library(readxl)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(gt)
+
+
+
+
 #Cambiar fecha de ingreso a formato fecha en ambas bases
 
 # Para datos.a
@@ -90,10 +101,46 @@ tabla_gt <- tabla_ancha %>%
     Semana4_P = "P",
     Semana5_A = "A",
     Semana5_P = "P"
+  ) %>% 
+
+tab_options(
+  table.font.size = px(10), # Tamaño de la fuente de la tabla
+  column_labels.font.size = px(8), # Tamaño de la fuente de las etiquetas de las columnas
+  heading.title.font.size = px(10), # Tamaño de la fuente del título
+  heading.subtitle.font.size = px(8) # Tamaño de la fuente del subtítulo
+) %>%
+  tab_options(
+    data_row.padding = px(2), # Espaciado de las filas de datos
+    heading.padding = px(2), # Espaciado del encabezado
+    column_labels.padding = px(2) # Espaciado de las etiquetas de las columnas
+  )  %>%
+  
+  # Alinear la primera columna a la izquierda
+  cols_align(align = "left", columns = `Tipo de egreso`) %>%
+  # Alinear todas las demás columnas a la derecha
+  cols_align(align = "center", columns = c(contains("1"), contains("2"), contains("3"), contains("4"), contains("5"))) %>%
+  # Aplicar color de fondo a las columnas `A` y `P`
+  tab_style(
+    style = list(
+      cell_fill(color = "#D9EAD3")                   # Color de fondo verde claro para las columnas `A`
+    ),
+    locations = cells_body(columns = contains("_A"))
+  ) %>%
+  tab_style(
+    style = list(
+      cell_fill(color = "#F4CCCC")                   # Color de fondo rojo claro para las columnas `P`
+    ),
+    locations = cells_body(columns = contains("_P"))
   )
 
-# Mostrar la tabla
-print(tabla_gt)
+
+
+
+
+
+
+
+
 
 
 
@@ -107,7 +154,7 @@ datos_p_filtrados <- datos.p_joined %>%
   filter(`Tipo de egreso` %in% c("Alta médica", "Defunción", "Derivación", "Internación"))
 
 # Gráfico para datos.a_joined
-ggplot(datos_a_filtrados, aes(x = factor(Semana), fill = `Tipo de egreso`)) +
+grafico1 <- ggplot(datos_a_filtrados, aes(x = factor(Semana), fill = `Tipo de egreso`)) +
   geom_bar(aes(y = ..count..), position = "dodge") +
   labs(title = "Egresos por Semana - Servicio A",
        x = "Semana",
@@ -115,7 +162,7 @@ ggplot(datos_a_filtrados, aes(x = factor(Semana), fill = `Tipo de egreso`)) +
   theme_minimal()
 
 # Gráfico para datos.p_joined
-ggplot(datos_p_filtrados, aes(x = factor(Semana), fill = `Tipo de egreso`)) +
+grafico2 <-ggplot(datos_p_filtrados, aes(x = factor(Semana), fill = `Tipo de egreso`)) +
   geom_bar(aes(y = ..count..), position = "dodge") +
   labs(title = "Egresos por Semana - Servicio P",
        x = "Semana",
