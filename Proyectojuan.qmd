@@ -1,0 +1,31 @@
+---
+title: "Prueba Informe"
+author: "Juan"
+date: today
+format: 
+  html:
+    embed-resources: true
+    published-title: "Fecha:"  # Cambia "Published" por "Fecha"
+    author-title: "Autor:"
+    toc: true                # Habilita la tabla de contenidos
+    toc-title: "Índice de Contenidos"  # Título del índice
+    toc-depth: 3             # Nivel de profundidad del índice (hasta h3)
+    toc-location: left       # Ubicación del índice (izquierda)
+editor: visual
+execute:
+  warning: false
+  message: false
+footnotes-hover: true # muestra notas al pie
+smooth-scroll: true # suaviza el scroll
+code-copy: true            # Permite copiar el código desde el documento
+---
+
+```{r}
+#Cargar libreria
+library(tidyr)
+library(readxl)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+
+```
